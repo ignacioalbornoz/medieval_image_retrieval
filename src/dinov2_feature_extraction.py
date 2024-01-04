@@ -104,9 +104,11 @@ def foreground_mask(attention_rgb, use_bbox=True):
             attention_mask[ymin:ymax, xmin:xmax] = True
     return attention_mask
 
-
+'''
 if __name__ == "__main__":
-    dataset_path = r'D:\datasets\medieval_images\DocExplore_images'   
+    #dataset_path = r'D:\datasets\medieval_images\DocExplore_images'   
+    dataset_path = r'/home/ignacio/2024-1/tesis/medieval_image_retrieval/DocExplore_images'   
+
 
     dinov2_sizes = {"small": 384,
                     "base": 768,
@@ -117,8 +119,11 @@ if __name__ == "__main__":
     model = load_model(backbone_size)
 
     image_filenames = os.listdir(dataset_path)[0:5] # las primeras 5 imagenes para probar
+
+
     
     for img_filename in tqdm(image_filenames):
+        print(img_filename)
         image_path = os.path.join(dataset_path, img_filename)
         img = io.imread(image_path)
 
@@ -128,10 +133,15 @@ if __name__ == "__main__":
         fmap_shape = grid_shape + (features.shape[-1],)
         
         # visualizar mapas usando PCA
+      
         attention_rgb_bg = pca_colorize(attention, grid_shape, remove_bg=False)
+       
         attention_rgb = pca_colorize(attention, grid_shape, remove_bg=True)
+   
         attention_mask = foreground_mask(attention_rgb, use_bbox=False)
+ 
         attention_mask_box = foreground_mask(attention_rgb, use_bbox=True)
+
         features_rgb = pca_colorize(features, grid_shape, remove_bg=False)
         
         io.imshow(img)
@@ -151,3 +161,4 @@ if __name__ == "__main__":
 
         io.imshow(attention_mask_box)
         io.show()
+'''
